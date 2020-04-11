@@ -16,7 +16,7 @@ decodeString =
                         |> Result.map (\(P.PascalVoc p) -> p.filename)
 
                 desired =
-                    Ok (Just "000001.png")
+                    Ok "000001.png"
             in
             equal actual desired
 
@@ -97,5 +97,39 @@ simpleAnnotationXmlString =
 \t\t\t<ymax>146</ymax>
 \t\t</bndbox>
 \t</object>
+</annotation>
+"""
+
+
+decodeStringWithUnspecifiedValue : Test
+decodeStringWithUnspecifiedValue =
+    let
+        checkSegmented () =
+            let
+                actual =
+                    PD.decodeString simpleAnnotationXmlString2
+                        |> Result.map (\(P.PascalVoc p) -> p.segmented)
+
+                desired =
+                    Ok Nothing
+            in
+            equal actual desired
+    in
+    describe "test PascalVoc.Decode.decodeString with unspecified value"
+        [ test "test segmented name" checkSegmented
+        ]
+
+
+simpleAnnotationXmlString2 : String
+simpleAnnotationXmlString2 =
+    """
+<annotation>
+\t<filename>000001.png</filename>
+\t<size>
+\t\t<width>224</width>
+\t\t<height>224</height>
+\t\t<depth>3</depth>
+\t</size>
+\t<segmented>Unspecified</segmented>
 </annotation>
 """

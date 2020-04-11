@@ -1,9 +1,34 @@
 module PascalVoc.Decode exposing (decodeString)
 
+{-| Decoder for Pascal VOC XML format
+
+
+# Decoder
+
+@docs decodeString
+
+-}
+
 import PascalVoc.Internal.PascalVoc as P exposing (PascalVoc)
 import Xml.Decode as XD
 
 
+{-| Decode Pascal Vox XML format to `PascalVoc`.
+
+    xmlString = """
+    <annotation>
+      <filename>000001.png</filename>
+      <size>
+        <width>224</width>
+        <height>224</height>
+        <depth>3</depth>
+      </size>
+    </annotation>
+    """
+    decoded = decodeString xmlString
+    Result.map PascalVoc.filename decoded == Ok "000001.png"
+
+-}
 decodeString : String -> Result String PascalVoc
 decodeString =
     XD.decodeString pascalVocDecoder
@@ -15,7 +40,7 @@ pascalVocDecoder =
         |> XD.requiredPath [ "size" ] (XD.single sizeDecoder)
         |> XD.requiredPath [ "object" ] (XD.list objectDecoder)
         |> XD.possiblePath [ "source" ] (XD.single sourceDecoder)
-        |> XD.possiblePath [ "filename" ] (XD.single XD.string)
+        |> XD.requiredPath [ "filename" ] (XD.single XD.string)
         |> XD.possiblePath [ "folder" ] (XD.single XD.string)
         |> XD.possiblePath [ "path" ] (XD.single XD.string)
         |> XD.possiblePath [ "segmented" ] (XD.single XD.int)

@@ -37,7 +37,7 @@ format =
                                     , image = Nothing
                                     , flickrid = Nothing
                                     }
-                            , filename = Just "some_filename.png"
+                            , filename = "some_filename.png"
                             , folder = Nothing
                             , segmented = Nothing
                             }

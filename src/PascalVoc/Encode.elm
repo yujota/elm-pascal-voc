@@ -1,9 +1,24 @@
 module PascalVoc.Encode exposing (format)
 
+{-| Decoder for Pascal VOC XML format
+
+
+# Encoder
+
+@docs format
+
+-}
+
 import PascalVoc.Internal.PascalVoc as P exposing (PascalVoc)
 import XmlParser as XP
 
 
+{-| Encode `PascalVoc` to XML.
+
+    data = PascalVoc.pascalVoc { filename = "01.png", size = { width = 10, height = 15, depth = 3 }, objects = [] }
+    format data == "<annotation ><filename >01.png</filename><size ><width >10</width><height >15</height><depth >3</depth></size></annotation>
+
+-}
 format : PascalVoc -> String
 format (P.PascalVoc r) =
     { processingInstructions = []
@@ -12,7 +27,7 @@ format (P.PascalVoc r) =
         XP.Element "annotation"
             []
             (encodeMaybeValue "folder" identity r.folder
-                ++ encodeMaybeValue "filename" identity r.filename
+                ++ [ XP.Element "width" [] [ XP.Text r.filename ] ]
                 ++ encodeMaybeValue "path" identity r.path
                 ++ Maybe.withDefault [] (Maybe.map (encodeSource >> List.singleton) r.source)
                 ++ [ encodeSize r.size ]

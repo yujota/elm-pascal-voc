@@ -21,7 +21,7 @@ type alias PascalVocRecord =
     { size : Size
     , objects : List Object
     , source : Maybe Source
-    , filename : Maybe String
+    , filename : String
     , folder : Maybe String
     , path : Maybe String
     , segmented : Maybe Int
