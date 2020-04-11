@@ -17,6 +17,7 @@ pascalVocDecoder =
         |> XD.possiblePath [ "source" ] (XD.single sourceDecoder)
         |> XD.possiblePath [ "filename" ] (XD.single XD.string)
         |> XD.possiblePath [ "folder" ] (XD.single XD.string)
+        |> XD.possiblePath [ "path" ] (XD.single XD.string)
         |> XD.possiblePath [ "segmented" ] (XD.single XD.int)
         |> XD.map P.PascalVoc
 

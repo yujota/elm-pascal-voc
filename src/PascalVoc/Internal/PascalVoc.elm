@@ -1,8 +1,20 @@
-module PascalVoc.Internal.PascalVoc exposing (BoundingBox, Object, PascalVoc(..), PascalVocRecord, Size, Source)
+module PascalVoc.Internal.PascalVoc exposing
+    ( BoundingBox
+    , Object
+    , PascalVoc(..)
+    , PascalVocRecord
+    , PascalVocSource(..)
+    , Size
+    , Source
+    )
 
 
 type PascalVoc
     = PascalVoc PascalVocRecord
+
+
+type PascalVocSource
+    = PascalVocSource Source
 
 
 type alias PascalVocRecord =
@@ -11,6 +23,7 @@ type alias PascalVocRecord =
     , source : Maybe Source
     , filename : Maybe String
     , folder : Maybe String
+    , path : Maybe String
     , segmented : Maybe Int
     }
 
